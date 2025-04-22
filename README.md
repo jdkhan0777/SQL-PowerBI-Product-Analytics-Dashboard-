@@ -30,11 +30,7 @@ The goal is to provide clear and actionable insights into product performance th
 - Power BI for interactive dashboarding
 - GitHub for version control and collaboration
 
-## 📥 How to Run
-
-1. Clone this repo
-2. Open the `.pbix` file in Power BI Desktop
-3. Review the SQL queries under `SQL query`
+`
 
 
 ![image](https://github.com/user-attachments/assets/2b345164-8f0d-49d4-985e-bdf78bd23635)
