@@ -1,0 +1,31 @@
+-- Combine discount data with enriched sales and product data
+(
+    SELECT * 
+    FROM discount_data a
+
+    -- Begin subquery to process and calculate revenue/cost, extract date components
+    JOIN
+    (
+        SELECT 
+            *,  -- Select all original columns from both joined tables
+            
+            -- Calculate revenue by removing '$' from sale_price, converting to decimal, and multiplying by units sold
+            (REPLACE(sale_price, '$', '')::DECIMAL * units_sold) AS revenue,
+
+            -- Calculate total cost by removing '$' from cost_price, converting to decimal, and multiplying by units sold
+            (REPLACE(cost_price, '$', '')::DECIMAL * units_sold) AS total_cost,
+
+            -- Extract full month name from sale_date (e.g., January, February, etc.)
+            TO_CHAR(sale_date, 'FMMonth') AS month_id,
+
+            -- Extract year in 4-digit format from sale_date
+            TO_CHAR(sale_date, 'YYYY') AS year
+
+        FROM product_data a
+        JOIN product_sale b 
+        ON a.product_id = b.product_i  -- Join product metadata with sales data
+    ) AS b
+
+    -- Join discount data with processed sales data on month name
+    ON a.month = b.month_id
+)
